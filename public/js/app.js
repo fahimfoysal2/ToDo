@@ -1895,7 +1895,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    save_todo: function save_todo() {
+    saveTodo: function saveTodo() {
+      var _this = this;
+
       var newTodo = {
         id: this.toDoId,
         data: this.newToDoData
@@ -1905,6 +1907,13 @@ __webpack_require__.r(__webpack_exports__);
         if (this.toDoId) {
           // update
           axios.put("/todo/" + this.toDoId, newTodo);
+          this.toDos = this.toDos.filter(function (todo) {
+            if (_this.toDoId == todo.id) {
+              todo.data = _this.newToDoData;
+            }
+
+            return todo;
+          });
         } else {
           // create
           axios.post("/todo", newTodo).then(function (response) {
@@ -1917,13 +1926,13 @@ __webpack_require__.r(__webpack_exports__);
         alert("Empty Data");
       }
     },
-    delete_todo: function delete_todo(id) {
+    deleteTodo: function deleteTodo(id) {
       axios["delete"]("/todo/" + id);
       this.toDos = this.toDos.filter(function (todo) {
         return todo.id !== id;
       });
     },
-    update_todo: function update_todo(id, data) {
+    updateTodo: function updateTodo(id, data) {
       this.toDoId = id;
       this.newToDoData = data;
     }
@@ -37496,7 +37505,7 @@ var render = function() {
                 on: {
                   submit: function($event) {
                     $event.preventDefault()
-                    return _vm.save_todo.apply(null, arguments)
+                    return _vm.saveTodo.apply(null, arguments)
                   }
                 }
               },
@@ -37563,7 +37572,7 @@ var render = function() {
                         },
                         on: {
                           click: function($event) {
-                            return _vm.update_todo(toDo.id, toDo.data)
+                            return _vm.updateTodo(toDo.id, toDo.data)
                           }
                         }
                       },
@@ -37576,7 +37585,7 @@ var render = function() {
                         staticClass: "btn btn-sm btn-danger",
                         on: {
                           click: function($event) {
-                            return _vm.delete_todo(toDo.id)
+                            return _vm.deleteTodo(toDo.id)
                           }
                         }
                       },

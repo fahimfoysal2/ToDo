@@ -6,7 +6,7 @@
                 <!--Create new To do -->
                 <div class="card mb-4">
                     <div class="card-body">
-                        <form @submit.prevent="save_todo" class="form-inline">
+                        <form @submit.prevent="saveTodo" class="form-inline">
                             <input type="text" class="form-control" placeholder="New To Do" v-model="newToDoData">
                             <button type="submit" class="btn btn-dark">Save ToDo</button>
                         </form>
@@ -20,10 +20,10 @@
                         <ul class="list-group">
                             <li class="list-group-item" v-for="toDo in  toDos" :todo_id="toDo.id">
                                 {{ toDo.data }}
-                                <button class="btn btn-sm btn-warning" @click="update_todo(toDo.id, toDo.data)"
+                                <button class="btn btn-sm btn-warning" @click="updateTodo(toDo.id, toDo.data)"
                                         data-toggle="modal" data-target="#exampleModalCenter">Edit
                                 </button>
-                                <button class="btn btn-sm btn-danger" @click="delete_todo(toDo.id)">Delete</button>
+                                <button class="btn btn-sm btn-danger" @click="deleteTodo(toDo.id)">Delete</button>
                             </li>
                         </ul>
                     </div>
@@ -49,13 +49,19 @@ export default {
         }
     },
     methods: {
-        save_todo() {
+        saveTodo() {
             let newTodo = {id: this.toDoId, data: this.newToDoData};
 
             if (this.newToDoData !== "") {
                 if (this.toDoId) {
                     // update
                     axios.put("/todo/" + this.toDoId, newTodo);
+                    this.toDos = this.toDos.filter(todo => {
+                        if (this.toDoId == todo.id) {
+                            todo.data = this.newToDoData;
+                        }
+                        return todo;
+                    });
                 } else {
                     // create
                     axios.post("/todo", newTodo)
@@ -67,13 +73,15 @@ export default {
                 alert("Empty Data");
             }
         },
-        delete_todo(id) {
+
+        deleteTodo(id) {
             axios.delete("/todo/" + id);
             this.toDos = this.toDos.filter(todo => {
                 return todo.id !== id
-            })
+            });
         },
-        update_todo(id, data) {
+
+        updateTodo(id, data) {
             this.toDoId      = id;
             this.newToDoData = data;
         }
