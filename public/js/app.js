@@ -1877,35 +1877,56 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    fetchedTodos: {
+      type: Array
+    }
+  },
   data: function data() {
     return {
-      toDos: [{
-        id: 0,
-        data: "First To DO"
-      }],
-      newToDo: '',
-      lastTodoId: 0
+      toDos: this.fetchedTodos,
+      newToDoData: '',
+      toDoId: null
     };
   },
   methods: {
     save_todo: function save_todo() {
-      this.toDos.push({
-        id: ++this.lastTodoId,
-        data: this.newToDo
-      });
+      var newTodo = {
+        id: this.toDoId,
+        data: this.newToDoData
+      };
+
+      if (this.newToDoData !== "") {
+        if (this.toDoId) {
+          // update
+          axios.put("/todo/" + this.toDoId, newTodo);
+        } else {
+          // create
+          axios.post("/todo", newTodo).then(function (response) {
+            return newTodo.id = response.data;
+          });
+          this.toDos.push(newTodo);
+          this.toDoId = null;
+        }
+      } else {
+        alert("Empty Data");
+      }
     },
     delete_todo: function delete_todo(id) {
+      axios["delete"]("/todo/" + id);
       this.toDos = this.toDos.filter(function (todo) {
         return todo.id !== id;
       });
     },
-    edit_todo: function edit_todo(id) {
-      console.log(id);
+    update_todo: function update_todo(id, data) {
+      this.toDoId = id;
+      this.newToDoData = data;
     }
-  },
-  mounted: function mounted() {
-    console.log('Component mounted.');
   }
 });
 
@@ -37485,19 +37506,19 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.newToDo,
-                      expression: "newToDo"
+                      value: _vm.newToDoData,
+                      expression: "newToDoData"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text", placeholder: "New To Do" },
-                  domProps: { value: _vm.newToDo },
+                  domProps: { value: _vm.newToDoData },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.newToDo = $event.target.value
+                      _vm.newToDoData = $event.target.value
                     }
                   }
                 }),
@@ -37505,7 +37526,7 @@ var render = function() {
                 _c(
                   "button",
                   { staticClass: "btn btn-dark", attrs: { type: "submit" } },
-                  [_vm._v("Add item")]
+                  [_vm._v("Save ToDo")]
                 )
               ]
             )
@@ -37522,7 +37543,10 @@ var render = function() {
               _vm._l(_vm.toDos, function(toDo) {
                 return _c(
                   "li",
-                  { staticClass: "list-group-item", attrs: { id: toDo.id } },
+                  {
+                    staticClass: "list-group-item",
+                    attrs: { todo_id: toDo.id }
+                  },
                   [
                     _vm._v(
                       "\n                            " +
@@ -37533,13 +37557,17 @@ var render = function() {
                       "button",
                       {
                         staticClass: "btn btn-sm btn-warning",
+                        attrs: {
+                          "data-toggle": "modal",
+                          "data-target": "#exampleModalCenter"
+                        },
                         on: {
                           click: function($event) {
-                            return _vm.edit_todo(toDo.id)
+                            return _vm.update_todo(toDo.id, toDo.data)
                           }
                         }
                       },
-                      [_vm._v("Edit")]
+                      [_vm._v("Edit\n                            ")]
                     ),
                     _vm._v(" "),
                     _c(
