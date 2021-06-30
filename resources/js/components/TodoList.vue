@@ -6,9 +6,12 @@
                 <!--Create new To do -->
                 <div class="card mb-4">
                     <div class="card-body">
-                        <form @submit.prevent="saveTodo" class="form-inline">
-                            <input type="text" class="form-control" placeholder="New To Do" v-model="newToDoData">
-                            <button type="submit" class="btn btn-dark">Save ToDo</button>
+                        <form @submit.prevent="saveTodo">
+                            <div>
+                                <input type="text" class="form-control pr-3 pb-3" placeholder="New To Do"
+                                       v-model="newToDoData">
+                                <button type="submit" class="btn btn-dark mt-3">Save ToDo</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -19,11 +22,14 @@
                     <div class="card-body">
                         <ul class="list-group">
                             <li class="list-group-item" v-for="toDo in  toDos" :todo_id="toDo.id">
-                                {{ toDo.data }}
-                                <button class="btn btn-sm btn-warning" @click="updateTodo(toDo.id, toDo.data)"
-                                        data-toggle="modal" data-target="#exampleModalCenter">Edit
-                                </button>
-                                <button class="btn btn-sm btn-danger" @click="deleteTodo(toDo.id)">Delete</button>
+                                <span>{{ toDo.data }}</span>
+
+                                <span>
+                                    <button class="btn btn-sm btn-warning" @click="updateTodo(toDo.id, toDo.data)">
+                                        Edit
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" @click="deleteTodo(toDo.id)">Delete</button>
+                                </span>
                             </li>
                         </ul>
                     </div>
@@ -88,3 +94,10 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+}
+</style>
