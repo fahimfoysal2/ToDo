@@ -48,7 +48,7 @@ class TodoController extends Controller
      */
     public function show($id)
     {
-       //
+        //
     }
 
     /**
@@ -72,7 +72,7 @@ class TodoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $todo = Todo::find($id);
+        $todo       = Todo::find($id);
         $todo->data = $request->data;
         return $todo->save();
     }

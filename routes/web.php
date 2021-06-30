@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [TodoController::class,"index"]);
 
-//Route::get('/showToken', [TodoController::class, 'showToken']);
+Route::get('/login', function (){
+   return view('login');
+})->name('login');
 
-Route::resource('todo', TodoController::class);
+//Route::resource('todo', TodoController::class);
