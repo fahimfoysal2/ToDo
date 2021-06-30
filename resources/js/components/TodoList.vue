@@ -51,11 +51,6 @@ export default {
             });
         },
 
-        updateTodo(id, data) {
-            this.toDoId      = id;
-            this.newToDoData = data;
-        },
-
         savedTodoData(todo) {
             this.toDos.push(todo);
         }
