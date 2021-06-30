@@ -48,7 +48,7 @@ class TodoController extends Controller
      */
     public function show($id)
     {
-        //
+       //
     }
 
     /**
@@ -59,7 +59,8 @@ class TodoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $todo = Todo::find($id);
+        return view('editTodo', compact('todo'));
     }
 
     /**

@@ -27,27 +27,16 @@ export default {
             let newTodo = {id: this.toDoId, data: this.newToDoData};
 
             if (this.newToDoData !== "") {
-                if (this.toDoId) {
-                    // update
-                    axios.put("/todo/" + this.toDoId, newTodo);
-                    this.toDos = this.toDos.filter(todo => {
-                        if (this.toDoId === todo.id) {
-                            todo.data = this.newToDoData;
-                        }
-                        return todo;
-                    });
-                } else {
-                    // create
-                    axios.post("/todo", newTodo)
-                        .then(response => newTodo.id = response.data);
+                // create
+                axios.post("/todo", newTodo)
+                    .then(response => newTodo.id = response.data);
 
-                    this.toParent(newTodo);
-                }
+                this.toParent(newTodo);
             } else {
                 alert("Empty Data");
             }
         },
-        toParent(todo){
+        toParent(todo) {
             this.$emit('savedTodo', todo);
         }
     }

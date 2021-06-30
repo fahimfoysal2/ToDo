@@ -10,8 +10,8 @@
                         <span>{{ toDo.data }}</span>
 
                         <span>
-                        <button class="btn btn-sm btn-warning" @click="updateTodo(toDo.id, toDo.data)">
-                            <a :href="'todo/'+toDo.id">Edit</a>
+                        <button class="btn btn-sm btn-warning">
+                            <a :href="'todo/'+toDo.id+'/edit'">Edit</a>
                         </button>
                         <button class="btn btn-sm btn-danger" @click="deleteTodo(toDo.id)">Delete</button>
                     </span>

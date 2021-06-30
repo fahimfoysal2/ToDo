@@ -4,6 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+import TodoSave from "./components/TodoSave";
+
 require('./bootstrap');
 
 window.Vue = require('vue').default;
@@ -20,6 +22,8 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('todo-list', require('./components/TodoList.vue').default);
+Vue.component('todo-edit', require('./components/TodoEdit.vue').default);
+Vue.component('todo-save', require('./components/TodoSave.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
