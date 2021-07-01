@@ -2055,6 +2055,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "TodoEdit",
   props: {
@@ -2080,21 +2081,30 @@ __webpack_require__.r(__webpack_exports__);
       updatedTodo: {
         id: this.todo.id,
         data: this.todo.data
-      }
+      },
+      status: null
     };
   },
   methods: {
     updateTodo: function updateTodo() {
+      var _this = this;
+
       // update
       axios.defaults.headers.common['Authorization'] = "Bearer " + this.token;
-      axios.put("/api/todo/" + this.todo.id, this.updatedTodo);
-      alert("Data Updated");
+      axios.put("/api/todo/" + this.todo.id, this.updatedTodo).then(function (response) {
+        return _this.status = true;
+      })["catch"](function (error) {
+        return _this.status = false;
+      });
     }
   },
   computed: {
     token: function token() {
       var user = JSON.parse(localStorage.getItem('user'));
       return user.token;
+    },
+    updateMessage: function updateMessage() {
+      return this.status ? "Data Updated" : "";
     }
   }
 });
@@ -38851,7 +38861,11 @@ var render = function() {
                 [_vm._v("Update ToDo")]
               ),
               _vm._v(" "),
-              _vm._m(0)
+              _vm._m(0),
+              _vm._v(" "),
+              _c("span", { class: { "text-success": _vm.status } }, [
+                _vm._v(_vm._s(_vm.updateMessage))
+              ])
             ])
           ]
         )

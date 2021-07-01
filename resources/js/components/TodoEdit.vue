@@ -11,6 +11,7 @@
                         <button type="button" class="btn btn-success mt-3 text">
                             <a href="/" class="text-light">Go Back</a>
                         </button>
+                        <span :class="{'text-success':status}">{{updateMessage}}</span>
                     </div>
                 </form>
             </div>
@@ -22,7 +23,7 @@
 <script>
 
 export default {
-    name : "TodoEdit",
+    name: "TodoEdit",
     props: {
         todo: {
             type: Object
@@ -43,24 +44,29 @@ export default {
     data() {
         return {
             updatedTodo: {
-                id  : this.todo.id,
+                id: this.todo.id,
                 data: this.todo.data,
-            }
+            },
+            status: null,
         }
     },
     methods: {
         updateTodo() {
             // update
             axios.defaults.headers.common['Authorization'] = `Bearer ` + this.token;
-            axios.put("/api/todo/" + this.todo.id, this.updatedTodo);
-
-            alert("Data Updated");
+            axios.put("/api/todo/" + this.todo.id, this.updatedTodo)
+                .then(response => this.status = true)
+                .catch(error => this.status = false);
         }
     },
     computed: {
         token() {
             let user = JSON.parse(localStorage.getItem('user'));
             return user.token;
+        },
+
+        updateMessage(){
+            return this.status ? "Data Updated" : "";
         }
     }
 }
