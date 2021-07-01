@@ -2148,6 +2148,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -2188,6 +2192,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     savedTodoData: function savedTodoData(todo) {
       this.toDos.push(todo);
+    },
+    logOut: function logOut() {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + this.token;
+      axios.post("/api/logout");
+      localStorage.removeItem("user");
+      window.location.assign('/login');
     }
   },
   computed: {
@@ -38914,6 +38924,14 @@ var render = function() {
   return _c(
     "div",
     [
+      _c("div", { staticClass: "pb-2" }, [
+        _c(
+          "button",
+          { staticClass: "btn btn-danger", on: { click: _vm.logOut } },
+          [_vm._v("Logout")]
+        )
+      ]),
+      _vm._v(" "),
       _c("todo-save", { on: { savedTodo: _vm.savedTodoData } }),
       _vm._v(" "),
       _c("div", { staticClass: "card" }, [

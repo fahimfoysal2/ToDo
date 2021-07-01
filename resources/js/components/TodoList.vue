@@ -1,5 +1,9 @@
 <template>
     <div>
+        <div class="pb-2">
+            <button @click="logOut" class="btn btn-danger">Logout</button>
+        </div>
+
         <todo-save @savedTodo="savedTodoData"></todo-save>
         <!-- My To do List -->
         <div class="card">
@@ -66,7 +70,13 @@ export default {
 
         savedTodoData(todo) {
             this.toDos.push(todo);
-        }
+        },
+        logOut(){
+            axios.defaults.headers.common["Authorization"] = `Bearer `+ this.token;
+            axios.post("/api/logout");
+            localStorage.removeItem("user");
+            window.location.assign('/login')
+        },
     },
     computed: {
         token() {

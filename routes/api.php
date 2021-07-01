@@ -22,5 +22,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->middleware('auth:api')
+    ->name('logout');
 
 Route::resource('todo', TodoController::class)->middleware('auth:api');
