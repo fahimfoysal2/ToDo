@@ -2086,8 +2086,15 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     updateTodo: function updateTodo() {
       // update
-      axios.put("/todo/" + this.todo.id, this.updatedTodo);
+      axios.defaults.headers.common['Authorization'] = "Bearer " + this.token;
+      axios.put("/api/todo/" + this.todo.id, this.updatedTodo);
       alert("Data Updated");
+    }
+  },
+  computed: {
+    token: function token() {
+      var user = JSON.parse(localStorage.getItem('user'));
+      return user.token;
     }
   }
 });
@@ -2163,13 +2170,20 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     deleteTodo: function deleteTodo(id) {
-      axios["delete"]("/todo/" + id);
+      axios.defaults.headers.common["Authorization"] = "Bearer " + this.token;
+      axios["delete"]("/api/todo/" + id);
       this.toDos = this.toDos.filter(function (todo) {
         return todo.id !== id;
       });
     },
     savedTodoData: function savedTodoData(todo) {
       this.toDos.push(todo);
+    }
+  },
+  computed: {
+    token: function token() {
+      var user = JSON.parse(localStorage.getItem('user'));
+      return user.token;
     }
   }
 });
@@ -2219,7 +2233,8 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.newToDoData !== "") {
         // create
-        axios.post("/todo", newTodo).then(function (response) {
+        axios.defaults.headers.common['Authorization'] = "Bearer " + this.token;
+        axios.post("/api/todo", newTodo).then(function (response) {
           return newTodo.id = response.data;
         });
         this.toParent(newTodo);
@@ -2229,6 +2244,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     toParent: function toParent(todo) {
       this.$emit('savedTodo', todo);
+    }
+  },
+  computed: {
+    token: function token() {
+      var user = JSON.parse(localStorage.getItem('user'));
+      return user.token;
     }
   }
 });
@@ -38974,7 +38995,7 @@ var render = function() {
                   expression: "newToDoData"
                 }
               ],
-              staticClass: "form-control pr-3 pb-3",
+              staticClass: "form-control pr-3",
               attrs: { type: "text", placeholder: "New To Do" },
               domProps: { value: _vm.newToDoData },
               on: {

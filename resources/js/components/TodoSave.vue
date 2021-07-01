@@ -4,7 +4,7 @@
         <div class="card-body">
             <form @submit.prevent="saveTodo">
                 <div>
-                    <input type="text" class="form-control pr-3 pb-3" placeholder="New To Do"
+                    <input type="text" class="form-control pr-3" placeholder="New To Do"
                            v-model="newToDoData">
                     <button type="submit" class="btn btn-dark mt-3">Save ToDo</button>
                 </div>
@@ -19,7 +19,7 @@ export default {
     data() {
         return {
             newToDoData: '',
-            toDoId     : null,
+            toDoId: null,
         }
     },
     methods: {
@@ -28,7 +28,8 @@ export default {
 
             if (this.newToDoData !== "") {
                 // create
-                axios.post("/todo", newTodo)
+                axios.defaults.headers.common['Authorization'] = `Bearer ` + this.token;
+                axios.post("/api/todo", newTodo)
                     .then(response => newTodo.id = response.data);
 
                 this.toParent(newTodo);
@@ -38,6 +39,11 @@ export default {
         },
         toParent(todo) {
             this.$emit('savedTodo', todo);
+        }
+    }, computed: {
+        token() {
+            let user = JSON.parse(localStorage.getItem('user'));
+            return user.token;
         }
     }
 }

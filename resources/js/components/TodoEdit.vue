@@ -51,9 +51,16 @@ export default {
     methods: {
         updateTodo() {
             // update
-            axios.put("/todo/" + this.todo.id, this.updatedTodo);
+            axios.defaults.headers.common['Authorization'] = `Bearer ` + this.token;
+            axios.put("/api/todo/" + this.todo.id, this.updatedTodo);
 
             alert("Data Updated");
+        }
+    },
+    computed: {
+        token() {
+            let user = JSON.parse(localStorage.getItem('user'));
+            return user.token;
         }
     }
 }

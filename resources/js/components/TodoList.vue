@@ -57,7 +57,8 @@ export default {
     },
     methods: {
         deleteTodo(id) {
-            axios.delete("/todo/" + id);
+            axios.defaults.headers.common["Authorization"] = `Bearer `+ this.token;
+            axios.delete("/api/todo/" + id);
             this.toDos = this.toDos.filter(todo => {
                 return todo.id !== id
             });
@@ -67,6 +68,12 @@ export default {
             this.toDos.push(todo);
         }
     },
+    computed: {
+        token() {
+            let user = JSON.parse(localStorage.getItem('user'));
+            return user.token;
+        }
+    }
 }
 </script>
 
