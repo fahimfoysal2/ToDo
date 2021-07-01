@@ -19,6 +19,11 @@
 
                     </div>
                 </form>
+
+                <div class="mt-3"
+                     :class="{'alert-danger':!logResponse.success}">
+                    {{ logResponse.message }}
+                </div>
             </div>
         </div>
     </div>
@@ -45,6 +50,10 @@ export default {
                 email   : "",
                 password: "",
             },
+            logResponse: {
+                success: '',
+                message: '',
+            }
         }
     },
     methods: {
@@ -52,18 +61,26 @@ export default {
             axios.post('/api/login', this.user)
                 .then(response => {
 
+                    console.log(response)
+                    // user logged in
                     // TODO: check if user is authenticated or not then store data
-
                     const user = {
                         token: response.data.access_token,
                         userId: response.data.user.id,
                         username: response.data.user.name,
                     };
-
+                    // save to local storage
                     if (typeof (Storage) !== "undefined") {
                         localStorage.setItem('user', JSON.stringify(user));
                     }
-                });
+                    // send to home page
+                    window.location.assign('/todo');
+                })
+                .catch(error => {
+                    this.logResponse.success = false;
+                    this.logResponse.message = (error.response.data.message);
+                })
+            ;
 
         }
     }

@@ -38,7 +38,7 @@ class AuthController extends Controller
         // TODO: validation failed response -> json
 
         if (!auth()->attempt($loginData)) {
-            return response(['message' => 'Invalid Credentials']);
+            return response(['message' => 'Invalid Credentials'],401);
         }
 
         $accessToken = auth()->user()->createToken('authToken')->accessToken;

@@ -1871,6 +1871,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Login",
   beforeCreate: function beforeCreate() {
@@ -1891,22 +1896,36 @@ __webpack_require__.r(__webpack_exports__);
       user: {
         email: "",
         password: ""
+      },
+      logResponse: {
+        success: '',
+        message: ''
       }
     };
   },
   methods: {
     login: function login() {
+      var _this = this;
+
       axios.post('/api/login', this.user).then(function (response) {
+        console.log(response); // user logged in
         // TODO: check if user is authenticated or not then store data
+
         var user = {
           token: response.data.access_token,
           userId: response.data.user.id,
           username: response.data.user.name
-        };
+        }; // save to local storage
 
         if (typeof Storage !== "undefined") {
           localStorage.setItem('user', JSON.stringify(user));
-        }
+        } // send to home page
+
+
+        window.location.assign('/todo');
+      })["catch"](function (error) {
+        _this.logResponse.success = false;
+        _this.logResponse.message = error.response.data.message;
       });
     }
   }
@@ -38556,6 +38575,21 @@ var render = function() {
               _vm._v(" "),
               _vm._m(0)
             ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "mt-3",
+            class: { "alert-danger": !_vm.logResponse.success }
+          },
+          [
+            _vm._v(
+              "\n                " +
+                _vm._s(_vm.logResponse.message) +
+                "\n            "
+            )
           ]
         )
       ])
