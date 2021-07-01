@@ -17,6 +17,8 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
+        // TODO: validation failed response -> json
+
         $validatedData['password'] = bcrypt($request->password);
 
         $user = User::create($validatedData);
@@ -32,6 +34,8 @@ class AuthController extends Controller
             'email'    => 'email|required',
             'password' => 'required'
         ]);
+
+        // TODO: validation failed response -> json
 
         if (!auth()->attempt($loginData)) {
             return response(['message' => 'Invalid Credentials']);

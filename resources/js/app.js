@@ -25,6 +25,7 @@ Vue.component('todo-list', require('./components/TodoList.vue').default);
 Vue.component('todo-edit', require('./components/TodoEdit.vue').default);
 Vue.component('todo-save', require('./components/TodoSave.vue').default);
 Vue.component('login', require('./components/Login.vue').default);
+Vue.component('register', require('./components/Register.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

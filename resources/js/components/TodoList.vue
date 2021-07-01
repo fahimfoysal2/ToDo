@@ -36,6 +36,18 @@ export default {
     components: {
         TodoSave
     },
+    beforeCreate() {
+        if (typeof (Storage) !== "undefined") {
+            let user = localStorage.getItem('user');
+            if (user == null || user === '') {
+                // console.log(JSON.parse(user));
+                console.log("User not Set");
+                window.location.assign('/login');
+            } else {
+                console.log("Logged in");
+            }
+        }
+    },
     data() {
         return {
             toDos      : this.fetchedTodos,

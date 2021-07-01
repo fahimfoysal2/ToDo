@@ -20,4 +20,8 @@ Route::get('/login', function (){
    return view('login');
 })->name('login');
 
-Route::resource('todo', TodoController::class)->middleware('auth:api');
+Route::get('/register', function (){
+    return view('register');
+})->name('register');
+
+Route::resource('todo', TodoController::class);
