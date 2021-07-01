@@ -13,12 +13,12 @@ class TodoController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function index()
     {
         $todos = Todo::all();
-        return response(['todos' => $todos, 'message' => 'Retrieved successfully'], 200);
+        return response()->json(['todos' => $todos, 'message' => 'Retrieved successfully']);
     }
 
     /**
@@ -30,7 +30,6 @@ class TodoController extends Controller
     public function store(Request $request)
     {
         $id = Todo::create(["data" => $request->data])->id;
-
         return response()->json($id);
     }
 
@@ -50,22 +49,24 @@ class TodoController extends Controller
      *
      * @param Request $request
      * @param Todo $todo
-     * @return Response
+     * @return JsonResponse
      */
     public function update(Request $request, Todo $todo)
     {
         $todo->data = $request->data;
-        return $todo->save();
+        $saved = $todo->save();
+        return response()->json($saved ? "Data Updated" : "Update Failed");
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param Todo $todo
-     * @return Response
+     * @return JsonResponse
      */
     public function destroy(Todo $todo)
     {
-        return $todo->delete();
+        $deleted = $todo->delete();
+        return response()->json($deleted ? "Data Deleted" : "Delete Failed");
     }
 }
