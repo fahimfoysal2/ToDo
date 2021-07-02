@@ -14,13 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function (){
+Route::get('/{home?}', function (){
     return view('welcome');
-});
-
-Route::get('/todo', function (){
-    return view('welcome');
-});
+})->where('home', 'todo|home');
 
 Route::get('/login', function (){
    return view('login');
