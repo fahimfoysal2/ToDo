@@ -2151,6 +2151,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2164,8 +2166,6 @@ __webpack_require__.r(__webpack_exports__);
         // console.log(JSON.parse(user));
         console.log("User not Set");
         window.location.assign('/login');
-      } else {
-        console.log("Logged in");
       }
     }
   },
@@ -2218,6 +2218,9 @@ __webpack_require__.r(__webpack_exports__);
     token: function token() {
       var user = JSON.parse(localStorage.getItem('user'));
       return user.token;
+    },
+    thingsTodo: function thingsTodo() {
+      return this.toDos.length;
     }
   }
 });
@@ -39019,50 +39022,54 @@ var render = function() {
             _c("div", { staticClass: "card-header" }, [_vm._v("My Todo List")]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _c(
-                "ul",
-                { staticClass: "list-group" },
-                _vm._l(_vm.toDos, function(toDo) {
-                  return _c(
-                    "li",
-                    {
-                      staticClass: "list-group-item",
-                      attrs: { todo_id: toDo.id }
-                    },
-                    [
-                      _c("span", [_vm._v(_vm._s(toDo.data))]),
-                      _vm._v(" "),
-                      _c("span", [
-                        _c(
-                          "button",
-                          { staticClass: "btn btn-sm btn-warning" },
-                          [
+              _vm.thingsTodo
+                ? _c(
+                    "ul",
+                    { staticClass: "list-group" },
+                    _vm._l(_vm.toDos, function(toDo) {
+                      return _c(
+                        "li",
+                        {
+                          staticClass: "list-group-item",
+                          attrs: { todo_id: toDo.id }
+                        },
+                        [
+                          _c("span", [_vm._v(_vm._s(toDo.data))]),
+                          _vm._v(" "),
+                          _c("span", [
                             _c(
-                              "a",
-                              { attrs: { href: "todo/" + toDo.id + "/edit" } },
-                              [_vm._v("Edit")]
+                              "button",
+                              { staticClass: "btn btn-sm btn-warning" },
+                              [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "todo/" + toDo.id + "/edit" }
+                                  },
+                                  [_vm._v("Edit")]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-sm btn-danger",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteTodo(toDo.id)
+                                  }
+                                }
+                              },
+                              [_vm._v("Delete")]
                             )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-sm btn-danger",
-                            on: {
-                              click: function($event) {
-                                return _vm.deleteTodo(toDo.id)
-                              }
-                            }
-                          },
-                          [_vm._v("Delete")]
-                        )
-                      ])
-                    ]
+                          ])
+                        ]
+                      )
+                    }),
+                    0
                   )
-                }),
-                0
-              )
+                : _c("h4", [_vm._v("Hurrah! Nothing to do!")])
             ])
           ])
         ],

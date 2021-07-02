@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-header">My Todo List</div>
             <div class="card-body">
-                <ul class="list-group">
+                <ul v-if="thingsTodo" class="list-group">
                     <li class="list-group-item" v-for="toDo in  toDos" :todo_id="toDo.id">
                         <span>{{ toDo.data }}</span>
 
@@ -21,6 +21,8 @@
                     </span>
                     </li>
                 </ul>
+
+                <h4 v-else>Hurrah! Nothing to do!</h4>
             </div>
         </div>
     </div>
@@ -42,8 +44,6 @@ export default {
                 // console.log(JSON.parse(user));
                 console.log("User not Set");
                 window.location.assign('/login');
-            } else {
-                console.log("Logged in");
             }
         }
     },
@@ -62,11 +62,11 @@ export default {
                 options: {
                     info: {
                         position: "topRight",
-                        timeout :  '1500',
+                        timeout: '1500',
                     },
                     success: {
                         position: "topRight",
-                        timeout :  '1500',
+                        timeout: '1500',
                     }
                 }
             }
@@ -99,6 +99,9 @@ export default {
         token() {
             let user = JSON.parse(localStorage.getItem('user'));
             return user.token;
+        },
+        thingsTodo() {
+            return this.toDos.length;
         }
     }
 }
