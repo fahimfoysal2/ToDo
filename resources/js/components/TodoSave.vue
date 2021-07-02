@@ -39,6 +39,7 @@ export default {
         },
         toParent(todo) {
             this.$emit('savedTodo', todo);
+            this.newToDoData = '';
         }
     }, computed: {
         token() {

@@ -2122,7 +2122,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _TodoSave__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TodoSave */ "./resources/js/components/TodoSave.vue");
-/* harmony import */ var _Login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Login */ "./resources/js/components/Login.vue");
 //
 //
 //
@@ -2152,12 +2151,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    TodoSave: _TodoSave__WEBPACK_IMPORTED_MODULE_0__.default,
-    Login: _Login__WEBPACK_IMPORTED_MODULE_1__.default
+    TodoSave: _TodoSave__WEBPACK_IMPORTED_MODULE_0__.default
   },
   beforeCreate: function beforeCreate() {
     if (typeof Storage !== "undefined") {
@@ -2177,7 +2174,6 @@ __webpack_require__.r(__webpack_exports__);
 
     axios.defaults.headers.common["Authorization"] = "Bearer " + this.token;
     axios.get("/api/todo/").then(function (response) {
-      console.log(response.data.todos);
       _this.toDos = response.data.todos;
     });
   },
@@ -2198,6 +2194,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     savedTodoData: function savedTodoData(todo) {
       this.toDos.push(todo);
+      console.log("asve clickerd");
     },
     logOut: function logOut() {
       axios.defaults.headers.common["Authorization"] = "Bearer " + this.token;
@@ -2270,6 +2267,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     toParent: function toParent(todo) {
       this.$emit('savedTodo', todo);
+      this.newToDoData = '';
     }
   },
   computed: {

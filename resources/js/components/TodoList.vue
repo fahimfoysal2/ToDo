@@ -30,12 +30,10 @@
 <script>
 
 import TodoSave from "./TodoSave";
-import Login from "./Login";
 
 export default {
     components: {
         TodoSave,
-        Login
     },
     beforeCreate() {
         if (typeof (Storage) !== "undefined") {
@@ -53,7 +51,6 @@ export default {
         axios.defaults.headers.common["Authorization"] = `Bearer ` + this.token;
         axios.get("/api/todo/")
             .then(response => {
-                console.log(response.data.todos);
                 this.toDos = response.data.todos;
             })
         ;
@@ -76,6 +73,7 @@ export default {
 
         savedTodoData(todo) {
             this.toDos.push(todo);
+            console.log("asve clickerd")
         },
         logOut() {
             axios.defaults.headers.common["Authorization"] = `Bearer ` + this.token;
