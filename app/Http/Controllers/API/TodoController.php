@@ -14,10 +14,12 @@ class TodoController extends Controller
      *
      * @return JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $todos = Todo::all();
-        return response()->json(['todos' => $todos, 'message' => 'Retrieved successfully']);
+        $user_id = $request->user()->id;
+
+        $todos = Todo::where('user_id', $user_id)->get();
+        return response()->json(['message' => "Retrieved successfully", 'todos' => $todos]);
     }
 
     /**
@@ -68,9 +70,17 @@ class TodoController extends Controller
      * @param Todo $todo
      * @return JsonResponse
      */
-    public function destroy(Todo $todo)
+    public function destroy(Request $request, $todo_id)
     {
-        $deleted = $todo->delete();
-        return response()->json($deleted ? "Data Deleted" : "Delete Failed");
+        try {
+            $todo = Todo::findOrFail($todo_id);
+            if ($todo->user->is($request->user())) {
+                $todo->delete();
+                return response()->json(["message" => "Todo Deleted"]);
+            }
+            return response()->json(["message" => "Not authorized"], 401);
+        } catch (\Exception $exception) {
+            return response()->json(["error" => "Not found!"], 400);
+        }
     }
 }
