@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class TodoController extends Controller
 {
-    public function __construct()
-    {
-//        $this->middleware('auth:api');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -19,9 +14,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todos = Todo::all();
-
-        return view('welcome', compact("todos"));
+        return view('welcome');
     }
 
     /**

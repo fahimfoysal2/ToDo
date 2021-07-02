@@ -1908,9 +1908,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.post('/api/login', this.user).then(function (response) {
-        console.log(response); // user logged in
+        // user logged in
         // TODO: check if user is authenticated or not then store data
-
         var user = {
           token: response.data.access_token,
           userId: response.data.user.id,
@@ -2154,11 +2153,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: {
-    fetchedTodos: {
-      type: Array
-    }
-  },
   components: {
     TodoSave: _TodoSave__WEBPACK_IMPORTED_MODULE_0__.default
   },
@@ -2175,9 +2169,18 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.defaults.headers.common["Authorization"] = "Bearer " + this.token;
+    axios.get("/api/todo/").then(function (response) {
+      console.log(response.data.todos);
+      _this.toDos = response.data.todos;
+    });
+  },
   data: function data() {
     return {
-      toDos: this.fetchedTodos,
+      toDos: [],
       newToDoData: '',
       toDoId: null
     };

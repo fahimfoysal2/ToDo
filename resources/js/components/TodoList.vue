@@ -32,11 +32,6 @@
 import TodoSave from "./TodoSave";
 
 export default {
-    props     : {
-        fetchedTodos: {
-            type: Array
-        },
-    },
     components: {
         TodoSave
     },
@@ -52,16 +47,25 @@ export default {
             }
         }
     },
+    mounted() {
+        axios.defaults.headers.common["Authorization"] = `Bearer ` + this.token;
+        axios.get("/api/todo/")
+            .then(response => {
+                console.log(response.data.todos);
+                this.toDos = response.data.todos;
+            })
+        ;
+    },
     data() {
         return {
-            toDos      : this.fetchedTodos,
+            toDos      : [],
             newToDoData: '',
             toDoId     : null,
         }
     },
     methods: {
         deleteTodo(id) {
-            axios.defaults.headers.common["Authorization"] = `Bearer `+ this.token;
+            axios.defaults.headers.common["Authorization"] = `Bearer ` + this.token;
             axios.delete("/api/todo/" + id);
             this.toDos = this.toDos.filter(todo => {
                 return todo.id !== id
@@ -71,8 +75,8 @@ export default {
         savedTodoData(todo) {
             this.toDos.push(todo);
         },
-        logOut(){
-            axios.defaults.headers.common["Authorization"] = `Bearer `+ this.token;
+        logOut() {
+            axios.defaults.headers.common["Authorization"] = `Bearer ` + this.token;
             axios.post("/api/logout");
             localStorage.removeItem("user");
             window.location.assign('/login')

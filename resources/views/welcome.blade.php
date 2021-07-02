@@ -3,5 +3,5 @@
 @section('title', 'ToDo')
 
 @section('content')
-    <todo-list :fetched-todos="{{$todos}}"></todo-list>
+    <todo-list></todo-list>
 @endsection

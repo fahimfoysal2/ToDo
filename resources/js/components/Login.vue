@@ -60,8 +60,6 @@ export default {
         login() {
             axios.post('/api/login', this.user)
                 .then(response => {
-
-                    console.log(response)
                     // user logged in
                     // TODO: check if user is authenticated or not then store data
                     const user = {
