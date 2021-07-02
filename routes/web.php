@@ -26,3 +26,4 @@ Route::get('/register', function (){
     return view('register');
 })->name('register');
 
+Route::get('/todo/{todo}/edit', [TodoController::class, 'edit']);
