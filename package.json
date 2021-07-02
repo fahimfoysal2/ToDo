@@ -25,6 +25,6 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "izitoast": "^1.4.0"
+        "vue-izitoast": "^1.2.1"
     }
 }

@@ -27,11 +27,11 @@ Vue.component('todo-save', require('./components/TodoSave.vue').default);
 Vue.component('login', require('./components/Login.vue').default);
 Vue.component('register', require('./components/Register.vue').default);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+import VueIziToast from "vue-izitoast";
+import "izitoast/dist/css/iziToast.css";
+
+Vue.use(VueIziToast);
+Vue.config.productionTip = false;
 
 const app = new Vue({
     el: '#app',

@@ -58,6 +58,19 @@ export default {
     data() {
         return {
             toDos: [],
+            notificationSystem: {
+                options: {
+                    info: {
+                        position: "topRight",
+                        timeout :  '1500',
+                    },
+                    success: {
+                        position: "topRight",
+                        timeout :  '1500',
+                    }
+                }
+            }
+
         }
     },
     methods: {
@@ -67,11 +80,13 @@ export default {
             this.toDos = this.toDos.filter(todo => {
                 return todo.id !== id
             });
+
+            this.$toast.info('Todo data deleted', 'Success', this.notificationSystem.options.info)
         },
 
         savedTodoData(todo) {
             this.toDos.push(todo);
-            console.log("asve clickerd")
+            this.$toast.success('Todo Created', 'Success', this.notificationSystem.options.success);
         },
         logOut() {
             axios.defaults.headers.common["Authorization"] = `Bearer ` + this.token;
