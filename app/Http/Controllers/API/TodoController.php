@@ -4,11 +4,19 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Todo;
+use App\Repositories\TodoRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class TodoController extends Controller
 {
+    private $repository;
+
+    public function __construct(TodoRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +26,9 @@ class TodoController extends Controller
     {
         $user_id = $request->user()->id;
 
-        $todos = Todo::where('user_id', $user_id)->get();
+        $todos = $this->repository->where('user_id', $user_id)->get();
+
+//        $todos = Todo::where('user_id', $user_id)->get();
         return response()->json(['message' => "Retrieved successfully", 'todos' => $todos]);
     }
 
@@ -35,7 +45,7 @@ class TodoController extends Controller
         ]);
 
         $user_id = $request->user()->id;
-        $todo_id = Todo::create(["user_id" => $user_id, "data" => $request->data])->id;
+        $todo_id = $this->repository->create(["user_id" => $user_id, "data" => $request->data])->id;
         return response()->json($todo_id);
     }
 
