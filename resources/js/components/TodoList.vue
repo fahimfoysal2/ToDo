@@ -58,8 +58,6 @@ export default {
     data() {
         return {
             toDos: [],
-            newToDoData: '',
-            toDoId: null,
         }
     },
     methods: {
