@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="token">
         <div class="pb-2">
             <button @click="logOut" class="btn btn-danger">Logout</button>
         </div>
@@ -30,10 +30,12 @@
 <script>
 
 import TodoSave from "./TodoSave";
+import Login from "./Login";
 
 export default {
     components: {
-        TodoSave
+        TodoSave,
+        Login
     },
     beforeCreate() {
         if (typeof (Storage) !== "undefined") {
@@ -58,9 +60,9 @@ export default {
     },
     data() {
         return {
-            toDos      : [],
+            toDos: [],
             newToDoData: '',
-            toDoId     : null,
+            toDoId: null,
         }
     },
     methods: {

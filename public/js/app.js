@@ -2122,6 +2122,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _TodoSave__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TodoSave */ "./resources/js/components/TodoSave.vue");
+/* harmony import */ var _Login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Login */ "./resources/js/components/Login.vue");
 //
 //
 //
@@ -2152,9 +2153,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    TodoSave: _TodoSave__WEBPACK_IMPORTED_MODULE_0__.default
+    TodoSave: _TodoSave__WEBPACK_IMPORTED_MODULE_0__.default,
+    Login: _Login__WEBPACK_IMPORTED_MODULE_1__.default
   },
   beforeCreate: function beforeCreate() {
     if (typeof Storage !== "undefined") {
@@ -38924,65 +38927,74 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("div", { staticClass: "pb-2" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-danger", on: { click: _vm.logOut } },
-          [_vm._v("Logout")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("todo-save", { on: { savedTodo: _vm.savedTodoData } }),
-      _vm._v(" "),
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [_vm._v("My Todo List")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c(
-            "ul",
-            { staticClass: "list-group" },
-            _vm._l(_vm.toDos, function(toDo) {
-              return _c(
-                "li",
-                { staticClass: "list-group-item", attrs: { todo_id: toDo.id } },
-                [
-                  _c("span", [_vm._v(_vm._s(toDo.data))]),
-                  _vm._v(" "),
-                  _c("span", [
-                    _c("button", { staticClass: "btn btn-sm btn-warning" }, [
-                      _c(
-                        "a",
-                        { attrs: { href: "todo/" + toDo.id + "/edit" } },
-                        [_vm._v("Edit")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-sm btn-danger",
-                        on: {
-                          click: function($event) {
-                            return _vm.deleteTodo(toDo.id)
-                          }
-                        }
-                      },
-                      [_vm._v("Delete")]
-                    )
-                  ])
-                ]
+  return _vm.token
+    ? _c(
+        "div",
+        [
+          _c("div", { staticClass: "pb-2" }, [
+            _c(
+              "button",
+              { staticClass: "btn btn-danger", on: { click: _vm.logOut } },
+              [_vm._v("Logout")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("todo-save", { on: { savedTodo: _vm.savedTodoData } }),
+          _vm._v(" "),
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-header" }, [_vm._v("My Todo List")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "ul",
+                { staticClass: "list-group" },
+                _vm._l(_vm.toDos, function(toDo) {
+                  return _c(
+                    "li",
+                    {
+                      staticClass: "list-group-item",
+                      attrs: { todo_id: toDo.id }
+                    },
+                    [
+                      _c("span", [_vm._v(_vm._s(toDo.data))]),
+                      _vm._v(" "),
+                      _c("span", [
+                        _c(
+                          "button",
+                          { staticClass: "btn btn-sm btn-warning" },
+                          [
+                            _c(
+                              "a",
+                              { attrs: { href: "todo/" + toDo.id + "/edit" } },
+                              [_vm._v("Edit")]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-danger",
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteTodo(toDo.id)
+                              }
+                            }
+                          },
+                          [_vm._v("Delete")]
+                        )
+                      ])
+                    ]
+                  )
+                }),
+                0
               )
-            }),
-            0
-          )
-        ])
-      ])
-    ],
-    1
-  )
+            ])
+          ])
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
