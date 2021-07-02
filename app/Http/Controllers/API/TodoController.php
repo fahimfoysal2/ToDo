@@ -57,11 +57,19 @@ class TodoController extends Controller
      * @param Todo $todo
      * @return JsonResponse
      */
-    public function update(Request $request, Todo $todo)
+    public function update(Request $request, $todo_id)
     {
-        $todo->data = $request->data;
-        $saved = $todo->save();
-        return response()->json($saved ? "Data Updated" : "Update Failed");
+        try {
+            $todo = Todo::findOrFail($todo_id);
+            if ($todo->user->is($request->user())) {
+                $todo->data = $request->data;
+                $saved = $todo->save();
+                return response()->json([$saved ? "Data Updated" : "Update Failed"]);
+            }
+            return response()->json(["message" => "Not authorized"], 401);
+        } catch (\Exception $exception) {
+            return response()->json(["error" => "Not found!"], 400);
+        }
     }
 
     /**
