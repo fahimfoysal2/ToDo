@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Todo;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class TodoController extends Controller
 {
@@ -29,19 +28,24 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        $id = Todo::create(["data" => $request->data])->id;
-        return response()->json($id);
+        $request->validate([
+            "data" => "required"
+        ]);
+
+        $user_id = $request->user()->id;
+        $todo_id = Todo::create(["user_id" => $user_id, "data" => $request->data])->id;
+        return response()->json($todo_id);
     }
 
     /**
      * Display the specified resource.
      *
      * @param Todo $todo
-     * @return Response
+     * @return JsonResponse
      */
     public function show(Todo $todo)
     {
-        //
+        return response()->json("Hello Alien");
     }
 
     /**
